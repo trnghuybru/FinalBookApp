@@ -19,7 +19,7 @@ public class Condb {
     public static Connection getConnection() {
         Connection c = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
             c = DriverManager.getConnection(url, user, password);
             if (c != null) {
 //   System.out.print("Connected to database successfully");    

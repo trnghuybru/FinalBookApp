@@ -476,7 +476,39 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMailActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        // TODO add your handling code here:
+ String phoneNumber = txtPhoneRegister.getText().trim();
+
+// Kiểm tra số điện thoại có đúng định dạng hay không (bắt buộc có số 0 ở đầu và tối thiểu 10 chữ số)
+if (!phoneNumber.matches("^0\\d{9,}$") || !phoneNumber.matches("\\d+")) {
+           System.out.println("Client.Client.btnRegisterActionPerformed()"+phoneNumber);
+    JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ!");
+    return;
+}
+String email = txtMail.getText().trim();
+    
+    // Kiểm tra định dạng email có chứa ký tự @ hay không
+    if (!email.contains("@")) {
+        JOptionPane.showMessageDialog(this, "Địa chỉ email không hợp lệ!");
+        return;
+    }
+    
+    String pw = txtPassRegis.getText();
+ 
+    
+    // Kiểm tra số điện thoại có đúng định dạng hay không (8 chữ số trở lên)
+    if (pw.length() < 8) {
+        JOptionPane.showMessageDialog(this, "Mật khẩu chứa ít nhất 8 chữ số!");
+        return;
+    }
+     
+        String confirmPassword = txtConfirmPass.getText();
+    
+    // Kiểm tra xem hai mật khẩu có giống nhau hay không
+    if (!pw.equals(confirmPassword)) {
+        JOptionPane.showMessageDialog(this, "Mật khẩu xác nhận không đúng!");
+        return;
+    }
+        
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void txtConfirmPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmPassActionPerformed
@@ -494,10 +526,14 @@ public class Client extends javax.swing.JFrame {
 
     private void btnndRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnndRegisterActionPerformed
         // TODO add your handling code here:
+//          String phoneNumber = txtPhone.getText();
+
+  
         Parent.removeAll();
         Parent.add(RegisterPannel);
         Parent.repaint();
         Parent.revalidate();
+        
     }//GEN-LAST:event_btnndRegisterActionPerformed
 
     private void btnndLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnndLoginActionPerformed

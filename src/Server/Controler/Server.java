@@ -30,12 +30,17 @@ public class Server {
 
     public static void main(String[] args) {
         ServerSocket listener = null;
+        ServerView serverv= new ServerView();
+        int value= serverv.getPort();
+        System.out.println("Server.Controler.Server.main()"+value);
+
+        
         serverThreadBus = new ServerThreadBus();
         System.out.println("Server is waiting to accept user....");
         int clientNumber = 0;
 
         try {
-            listener = new ServerSocket(7777);
+            listener = new ServerSocket(value);
         } catch (IOException ex) {
             ex.printStackTrace();
             System.exit(1);

@@ -5,6 +5,7 @@
 package Server.Controler;
 
 import DAOs.AccountDB;
+import DAOs.BookSiteDB;
 import Server.Model.Account;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import Server.Model.BookSite;
 
 /**
  *
@@ -42,8 +45,7 @@ class ServerThread implements Runnable {
             // Mở luồng vào ra trên Socket tại Server.
             is = new BufferedReader(new InputStreamReader(socketOfServer.getInputStream()));
             os = new BufferedWriter(new OutputStreamWriter(socketOfServer.getOutputStream()));
-            System.out.println("Khời động luông mới thành công, ID là: " + clientNumber);
-            write("get-id" + "," + this.clientNumber);
+
 //            Server.serverThreadBus.sendOnlineList();
 //            Server.serverThreadBus.multiCastSend("global-message"+","+"---Client "+this.clientNumber+" đã đăng nhập---");
             String message;
@@ -54,28 +56,37 @@ class ServerThread implements Runnable {
                     break;
                 }
                 String[] messageSplit = message.split(",");
-                if (messageSplit[0].equals("login")){
-                    if (authenticateUser(message)){
-                        write("login,success");
+                if (messageSplit[0].equals("login")) {
+                    if (authenticateUser(message)) {
+                        System.out.println("Khời động luông mới thành công, ID là: " + clientNumber);
+                        write("get-id" + "," + this.clientNumber);
+                        write("login,success," + getUsername(message));
+                        write("showBooks,"+getUrl());
                         isLogin = true;
-                    }else {
+                    } else {
                         write("login,fail");
                         isLogin = false;
                     }
                 }
-                if (isLogin==true){
-                    if(messageSplit[0].equals("send-to-global")){
-                        Server.serverThreadBus.boardCast(this.getClientNumber(),"global-message"+","+"Client "+messageSplit[2]+": "+messageSplit[1]);
-                    }
-                    if(messageSplit[0].equals("send-to-person")){
-                        Server.serverThreadBus.sendMessageToPerson(Integer.parseInt(messageSplit[3]),"Client "+ messageSplit[2]+" (tới bạn): "+messageSplit[1]);
-                    }
+                if (messageSplit[0].equals("register")) {
+                    register(messageSplit[1], messageSplit[2], messageSplit[3], messageSplit[4]);
+                    write("register,success");
+                }
+                
+                if (isLogin == true) {
+
+//                    if (messageSplit[0].equals("send-to-global")) {
+//                        Server.serverThreadBus.boardCast(this.getClientNumber(), "global-message" + "," + "Client " + messageSplit[2] + ": " + messageSplit[1]);
+//                    }
+//                    if (messageSplit[0].equals("send-to-person")) {
+//                        Server.serverThreadBus.sendMessageToPerson(Integer.parseInt(messageSplit[3]), "Client " + messageSplit[2] + " (tới bạn): " + messageSplit[1]);
+//                    }
                 }
             }
         } catch (IOException e) {
             isClosed = true;
             Server.serverThreadBus.remove(clientNumber);
-            System.out.println(this.clientNumber+" đã thoát");
+            System.out.println(this.clientNumber + " đã thoát");
             Server.serverThreadBus.sendOnlineList();
 //            Server.serverThreadBus.mutilCastSend("global-message"+","+"---Client "+this.clientNumber+" đã thoát---");
         }
@@ -90,8 +101,7 @@ class ServerThread implements Runnable {
     // Phương thức xác thực người dùng
     private boolean authenticateUser(String accountString) {
         // Đọc tên đăng nhập từ người dùng
-        
-        
+
         String[] accountSet = accountString.split(",");
         Account account = new Account(accountSet[1], accountSet[2]);
         Account accountX = AccountDB.getInstance().selectById(account.getPhone());
@@ -104,8 +114,33 @@ class ServerThread implements Runnable {
                 return false;
             }
         }
+    }
 
-        // Thông tin đăng nhập không chính xác
-       
+    private String getUsername(String accountString) {
+        String[] accountSet = accountString.split(",");
+        Account account = new Account(accountSet[1], accountSet[2]);
+        Account accountX = AccountDB.getInstance().selectById(account.getPhone());
+        return accountX.getUsername();
+    }
+
+    //Xu ly yeu cau dang ky 
+    private void register(String username, String phone, String mail, String password) {
+        Account account = new Account(username, password, phone, mail);
+        AccountDB.getInstance().insert(account);
+    }
+
+    private String getUrl() {
+        ArrayList<BookSite> ecobooks = BookSiteDB.getInstance().selectAll();
+        String[] urls = new String[ecobooks.size()];
+        for (int i = 0; i < ecobooks.size(); i++) {
+            urls[i] = ecobooks.get(i).getUrl();
+        }
+        StringBuilder urlBuilder = new StringBuilder();
+        for (int i = 0; i < urls.length - 1; i++) {
+            urlBuilder.append(urls[i]).append(",");
+        }
+        urlBuilder.append(urls[urls.length - 1]);
+        String url = urlBuilder.toString();
+        return url;
     }
 }

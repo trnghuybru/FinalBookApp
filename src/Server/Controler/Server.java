@@ -35,7 +35,7 @@ public class Server {
         int clientNumber = 0;
 
         try {
-            listener = new ServerSocket(7777);
+            listener = new ServerSocket(ServerView.getPort());
         } catch (IOException ex) {
             ex.printStackTrace();
             System.exit(1);

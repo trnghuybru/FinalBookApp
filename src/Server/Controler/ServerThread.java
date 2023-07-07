@@ -73,6 +73,13 @@ class ServerThread implements Runnable {
                     write("register,success");
                 }
                 
+                if (messageSplit[0].equals("showDetail")){
+                    write("showDetail,"+getDetailInfor(messageSplit[1]));
+                }
+                if (messageSplit[0].equals("recommentBooks")){
+                    write("recommentBooks,"+getRecommentUrl(messageSplit[1]));
+                }
+                
                 if (isLogin == true) {
 
 //                    if (messageSplit[0].equals("send-to-global")) {
@@ -134,6 +141,26 @@ class ServerThread implements Runnable {
         String[] urls = new String[ecobooks.size()];
         for (int i = 0; i < ecobooks.size(); i++) {
             urls[i] = ecobooks.get(i).getUrl();
+        }
+        StringBuilder urlBuilder = new StringBuilder();
+        for (int i = 0; i < urls.length - 1; i++) {
+            urlBuilder.append(urls[i]).append(",");
+        }
+        urlBuilder.append(urls[urls.length - 1]);
+        String url = urlBuilder.toString();
+        return url;
+    }
+    
+    private String getDetailInfor(String url){
+        String detail = BookSiteDB.getInstance().selectDetailBook(url);
+        return detail;
+    }
+    
+    private String getRecommentUrl(String publisher){
+        ArrayList<BookSite> bookUrls = BookSiteDB.getInstance().selectRecommentBooks(publisher);
+        String[] urls = new String[bookUrls.size()];
+        for (int i = 0; i < bookUrls.size(); i++) {
+            urls[i] = bookUrls.get(i).getUrl();
         }
         StringBuilder urlBuilder = new StringBuilder();
         for (int i = 0; i < urls.length - 1; i++) {

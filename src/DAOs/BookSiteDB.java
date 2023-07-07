@@ -74,13 +74,13 @@ public class BookSiteDB implements DAOinterface<BookSite> {
                 double price = rs.getDouble("price");
                 String url = rs.getString("url");
 
-                BookSite ebook = new BookSite(siteid,bookid,price, url);
+                BookSite ebook = new BookSite(siteid, bookid, price, url);
                 ketQua.add(ebook);
             }
             Condb.closeDBConnect(c);
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        }
         return ketQua; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -92,6 +92,67 @@ public class BookSiteDB implements DAOinterface<BookSite> {
     @Override
     public ArrayList<BookSite> selectByCondition(String condition) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String selectDetailBook(String url) {
+        String detail = "";
+        try {
+            Connection c = new Condb().getConnection();
+
+            Statement st = c.createStatement();
+
+            String sql = "SELECT book.name, book.author, book.year, book.publisher, book.lprice, booksite.siteid, booksite.price, booksite.url "
+                    + "FROM book "
+                    + "INNER JOIN booksite ON book.bookid = booksite.bookid "
+                    + "WHERE booksite.url = '"+url+"';";
+
+            ResultSet rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                String name = rs.getString("name");
+                String author = rs.getString("author");
+                String year = rs.getString("year");
+                String publisher = rs.getString("publisher");
+                Double lprice = rs.getDouble("lprice");
+                int siteid = rs.getInt("siteid");
+                Double price = rs.getDouble("price");
+                String urls = rs.getString("url");
+
+                detail = name + ";" + author + ";" + year + ";" + publisher + ";" + lprice + ";" + siteid + ";" + price + ";" + urls;
+
+            }
+            Condb.closeDBConnect(c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return detail;
+    }
+    
+    
+    public ArrayList<BookSite> selectRecommentBooks(String publisher) {
+        ArrayList<BookSite> ketQua = new ArrayList<BookSite>();
+        try {
+            Connection c = new Condb().getConnection();
+
+            Statement st = c.createStatement();
+
+            String sql = "SELECT book.bookid ,book.name, book.publisher, booksite.siteid, booksite.price, booksite.url FROM book INNER JOIN booksite ON book.bookid = booksite.bookid WHERE book.publisher LIKE '%"+publisher+"%' LIMIT 3;";
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                int bookid = rs.getInt("bookid");
+                int siteid = rs.getInt("siteid");
+                double price = rs.getDouble("price");
+                String url = rs.getString("url");
+
+                BookSite ebook = new BookSite(siteid, bookid, price, url);
+                ketQua.add(ebook);
+            }
+            Condb.closeDBConnect(c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ketQua; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

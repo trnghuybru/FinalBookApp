@@ -37,6 +37,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.SimpleAttributeSet;
@@ -1165,6 +1166,7 @@ public class Client extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
         sendMess();
+        currentText.setText("");
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void setUpSocket() {
@@ -1258,9 +1260,14 @@ public class Client extends javax.swing.JFrame {
                             ParentO.repaint();
                             ParentO.revalidate();
                         }
-                        
+
                         if (messageSplit[0].equals("postPublic")) {
                             createPostPanel(containerPanel, messageSplit[1], messageSplit[3], messageSplit[2], "djsfkd", 123);
+                        }
+
+                        if (messageSplit[0].equals("sentoGlobal")) {
+                            jTextPane1.setText(jTextPane1.getText() + messageSplit[1] + "\n");
+                            jTextPane1.setCaretPosition(jTextPane1.getDocument().getLength());
                         }
 
                     }
@@ -1296,7 +1303,7 @@ public class Client extends javax.swing.JFrame {
 
                         bookBoxPanel.removeAll();
                         write("showDetail," + url1);
-                        
+
                         jPanel5.repaint();
                         jPanel5.revalidate();
                     } catch (IOException ex) {
@@ -1308,7 +1315,7 @@ public class Client extends javax.swing.JFrame {
         jScrollPane1.repaint();
         jScrollPane1.revalidate();
     }
-    
+
     private void createPostPanel(JPanel containerPanel, String author, String date, String content, String imagePath, int likeCount) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -1329,16 +1336,13 @@ public class Client extends javax.swing.JFrame {
         imageLabel.setIcon(imageIcon);
 
         // Content
-        JTextPane contentTextPane = new JTextPane();
-        contentTextPane.setEditable(false);
-        contentTextPane.setText(content);
-        StyledDocument doc = contentTextPane.getStyledDocument();
-        SimpleAttributeSet centerStyle = new SimpleAttributeSet();
-        StyleConstants.setAlignment(centerStyle, StyleConstants.ALIGN_JUSTIFIED);
-        doc.setParagraphAttributes(0, doc.getLength(), centerStyle, false);
+        JTextArea contentTextArea = new JTextArea(content);
+        contentTextArea.setEditable(false);
+        contentTextArea.setLineWrap(true);
+        contentTextArea.setWrapStyleWord(true);
 
-        JScrollPane scrollPane = new JScrollPane(contentTextPane);
-        scrollPane.setPreferredSize(new Dimension(500, 150));
+        JScrollPane scrollPane = new JScrollPane(contentTextArea);
+        scrollPane.setPreferredSize(new Dimension(300, 150));
 
         // Footer
         JPanel footerPanel = new JPanel();
@@ -1404,18 +1408,16 @@ public class Client extends javax.swing.JFrame {
             });
         }
     }
-    
-    public void sendMess(){
+
+    public void sendMess() {
         String content = currentText.getText();
         String username = jLabel17.getText();
         try {
-            write("sendtoGlobal,"+content+","+username);
+            write("sendtoGlobal," + username + "," + content);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
     public static String hashWithMD5(String data) {
         try {
@@ -1446,17 +1448,16 @@ public class Client extends javax.swing.JFrame {
 
         return null;
     }
-    
-    private void postArticle(){
+
+    private void postArticle() {
         String username = jLabel17.getText();
         String content = contentPost.getText();
         try {
-            write("postRequest,"+username+","+content);
+            write("postRequest," + username + "," + content);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
     /**
      * @param args the command line arguments

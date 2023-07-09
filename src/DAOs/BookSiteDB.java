@@ -64,7 +64,7 @@ public class BookSiteDB implements DAOinterface<BookSite> {
 
             Statement st = c.createStatement();
 
-            String sql = "SELECT * FROM `booksite` WHERE 1 LIMIT 25";
+            String sql = "SELECT * FROM `booksite` WHERE 1 ORDER BY RAND() LIMIT 25";
 
             ResultSet rs = st.executeQuery(sql);
 
@@ -102,9 +102,11 @@ public class BookSiteDB implements DAOinterface<BookSite> {
             Statement st = c.createStatement();
 
             String sql = "SELECT book.name, book.author, book.year, book.publisher, book.lprice, booksite.siteid, booksite.price, booksite.url "
-                    + "FROM book "
-                    + "INNER JOIN booksite ON book.bookid = booksite.bookid "
-                    + "WHERE booksite.url = '"+url+"';";
++ "FROM book "
++ "INNER JOIN booksite ON book.bookid = booksite.bookid "
++ "WHERE booksite.url = '"+url+"' "
++ "ORDER BY RAND();";
+;
 
             ResultSet rs = st.executeQuery(sql);
 
@@ -136,7 +138,7 @@ public class BookSiteDB implements DAOinterface<BookSite> {
 
             Statement st = c.createStatement();
 
-            String sql = "SELECT book.bookid ,book.name, book.publisher, booksite.siteid, booksite.price, booksite.url FROM book INNER JOIN booksite ON book.bookid = booksite.bookid WHERE book.publisher LIKE '%"+publisher+"%' LIMIT 3;";
+            String sql = "SELECT book.bookid ,book.name, book.publisher, booksite.siteid, booksite.price, booksite.url FROM book INNER JOIN booksite ON book.bookid = booksite.bookid WHERE book.publisher LIKE '%"+publisher+"%' ORDER BY RAND() LIMIT 3 ;";
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {

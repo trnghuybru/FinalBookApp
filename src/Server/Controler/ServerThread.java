@@ -93,7 +93,9 @@ class ServerThread implements Runnable {
                     Server.serverThreadBus.boardCast("postPublic," + messageSplit[1] + "," + messageSplit[2]+","+mysqlDateTime);
                 }
                 
-                if (messageSplit[0].equals("sendtoGlobal")){}
+                if (messageSplit[0].equals("sendtoGlobal")){
+                    Server.serverThreadBus.boardCast("sentoGlobal,"+messageSplit[1]+": "+messageSplit[2]);
+                }
 
 //                if (isLogin == true) {
 //

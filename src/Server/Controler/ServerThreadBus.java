@@ -1,4 +1,4 @@
-   /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -15,22 +15,23 @@ import java.util.logging.Logger;
  * @author GIGABYTE
  */
 class ServerThreadBus {
+
     private List<ServerThread> listServerThreads;
-    
-    public List<ServerThread> getListServerThreads(){
+
+    public List<ServerThread> getListServerThreads() {
         return listServerThreads;
     }
-    
-    public ServerThreadBus(){
+
+    public ServerThreadBus() {
         listServerThreads = new ArrayList<>();
     }
-    
-    public void add(ServerThread serverThread){
+
+    public void add(ServerThread serverThread) {
         listServerThreads.add(serverThread);
     }
-    
-    public void multiCastSend(String message){
-        for (ServerThread serverThread : Server.serverThreadBus.getListServerThreads()){
+
+    public void multiCastSend(String message) {
+        for (ServerThread serverThread : Server.serverThreadBus.getListServerThreads()) {
             try {
                 serverThread.write(message);
             } catch (Exception e) {
@@ -38,39 +39,46 @@ class ServerThreadBus {
             }
         }
     }
-    
-    public void boardCast(int id, String message){
-        for (ServerThread serverThread : Server.serverThreadBus.getListServerThreads()){
-            if (serverThread.getClientNumber() == id){
-                continue;
-            }else{
-                try {
-                    serverThread.write(message);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+//    
+
+    public void boardCast(String message) {
+        for (ServerThread serverThread : Server.serverThreadBus.getListServerThreads()) {
+            try {
+                serverThread.write(message);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
+
         }
     }
-    
-    public int getLength(){
+
+    public int getLength() {
         return listServerThreads.size();
     }
-    
-    public void sendOnlineList(){
+
+//    public void postPublic() {
+//        String res = "";
+//        List<ServerThread> threadbus = Server.serverThreadBus.getListServerThreads();
+//        for (ServerThread serverThread : threadbus) {
+//            res += serverThread.getClientNumber() + "-";
+//        }
+//        Server.serverThreadBus.multiCastSend("update-online-list" + "," + res);
+//    }
+
+    public void sendOnlineList() {
         String res = "";
         List<ServerThread> threadbus = Server.serverThreadBus.getListServerThreads();
-        for (ServerThread serverThread : threadbus){
-            res+=serverThread.getClientNumber()+"-";
+        for (ServerThread serverThread : threadbus) {
+            res += serverThread.getClientNumber() + "-";
         }
-        Server.serverThreadBus.multiCastSend("update-online-list"+","+res);
+        Server.serverThreadBus.multiCastSend("update-online-list" + "," + res);
     }
-    
-    public void sendMessageToPerson(int id, String message){
-        for(ServerThread serverThread : Server.serverThreadBus.getListServerThreads()){
-            if (serverThread.getClientNumber() == id ){
+
+    public void sendMessageToPerson(int id, String message) {
+        for (ServerThread serverThread : Server.serverThreadBus.getListServerThreads()) {
+            if (serverThread.getClientNumber() == id) {
                 try {
-                    serverThread.write("global-message"+","+message);
+                    serverThread.write("global-message" + "," + message);
                     break;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -78,10 +86,10 @@ class ServerThreadBus {
             }
         }
     }
-    
-    public void remove(int id){
-        for (int i=0; i<Server.serverThreadBus.getLength();i++){
-            if (Server.serverThreadBus.getListServerThreads().get(i).getClientNumber()==id){
+
+    public void remove(int id) {
+        for (int i = 0; i < Server.serverThreadBus.getLength(); i++) {
+            if (Server.serverThreadBus.getListServerThreads().get(i).getClientNumber() == id) {
                 Server.serverThreadBus.listServerThreads.remove(i);
             }
         }

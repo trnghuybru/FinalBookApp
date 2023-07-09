@@ -6,6 +6,7 @@ package Server.Controler;
 
 import DAOs.AccountDB;
 import DAOs.BookSiteDB;
+import DAOs.PostDB;
 import Server.Model.Account;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,6 +16,9 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import Server.Model.BookSite;
+import Server.Model.Post;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -61,7 +65,7 @@ class ServerThread implements Runnable {
                         System.out.println("Khời động luông mới thành công, ID là: " + clientNumber);
                         write("get-id" + "," + this.clientNumber);
                         write("login,success," + getUsername(message));
-                        write("showBooks,"+getUrl());
+                        write("showBooks," + getUrl());
                         isLogin = true;
                     } else {
                         write("login,fail");
@@ -72,23 +76,34 @@ class ServerThread implements Runnable {
                     register(messageSplit[1], messageSplit[2], messageSplit[3], messageSplit[4]);
                     write("register,success");
                 }
-                
-                if (messageSplit[0].equals("showDetail")){
-                    write("showDetail,"+getDetailInfor(messageSplit[1]));
-                }
-                if (messageSplit[0].equals("recommentBooks")){
-                    write("recommentBooks,"+getRecommentUrl(messageSplit[1]));
-                }
-                
-                if (isLogin == true) {
 
-//                    if (messageSplit[0].equals("send-to-global")) {
-//                        Server.serverThreadBus.boardCast(this.getClientNumber(), "global-message" + "," + "Client " + messageSplit[2] + ": " + messageSplit[1]);
-//                    }
-//                    if (messageSplit[0].equals("send-to-person")) {
-//                        Server.serverThreadBus.sendMessageToPerson(Integer.parseInt(messageSplit[3]), "Client " + messageSplit[2] + " (tới bạn): " + messageSplit[1]);
-//                    }
+                if (messageSplit[0].equals("showDetail")) {
+                    write("showDetail," + getDetailInfor(messageSplit[1]));
                 }
+                if (messageSplit[0].equals("recommentBooks")) {
+                    write("recommentBooks," + getRecommentUrl(messageSplit[1]));
+                }
+
+                if (messageSplit[0].equals("postRequest")) {
+                    Date dateTime = new Date(); 
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String mysqlDateTime = sdf.format(dateTime);
+                    Post post = new Post(messageSplit[1], messageSplit[2], dateTime);
+                    PostDB.getInstance().insert(post);
+                    Server.serverThreadBus.boardCast("postPublic," + messageSplit[1] + "," + messageSplit[2]+","+mysqlDateTime);
+                }
+                
+                if (messageSplit[0].equals("sendtoGlobal")){}
+
+//                if (isLogin == true) {
+//
+////                    if (messageSplit[0].equals("send-to-global")) {
+////                        Server.serverThreadBus.boardCast(this.getClientNumber(), "global-message" + "," + "Client " + messageSplit[2] + ": " + messageSplit[1]);
+////                    }
+////                    if (messageSplit[0].equals("send-to-person")) {
+////                        Server.serverThreadBus.sendMessageToPerson(Integer.parseInt(messageSplit[3]), "Client " + messageSplit[2] + " (tới bạn): " + messageSplit[1]);
+////                    }
+//                }
             }
         } catch (IOException e) {
             isClosed = true;
@@ -150,13 +165,13 @@ class ServerThread implements Runnable {
         String url = urlBuilder.toString();
         return url;
     }
-    
-    private String getDetailInfor(String url){
+
+    private String getDetailInfor(String url) {
         String detail = BookSiteDB.getInstance().selectDetailBook(url);
         return detail;
     }
-    
-    private String getRecommentUrl(String publisher){
+
+    private String getRecommentUrl(String publisher) {
         ArrayList<BookSite> bookUrls = BookSiteDB.getInstance().selectRecommentBooks(publisher);
         String[] urls = new String[bookUrls.size()];
         for (int i = 0; i < bookUrls.size(); i++) {

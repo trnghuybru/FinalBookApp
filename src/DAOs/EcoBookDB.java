@@ -8,7 +8,7 @@ package DAOs;
  *
  * @author GIGABYTE
  */
-import Server.Model.Account;
+
 import Server.Model.EcoBook;
 import java.sql.Connection;
 import java.sql.ResultSet;

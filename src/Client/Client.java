@@ -4,7 +4,16 @@
  */
 package Client;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -13,16 +22,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -129,9 +148,22 @@ public class Client extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
-        lblBook3 = new javax.swing.JLabel();
-        lblBook1 = new javax.swing.JLabel();
-        lblBook2 = new javax.swing.JLabel();
+        bookBoxPanel = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        jButton10 = new javax.swing.JButton();
+        currentText = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        contentPost = new javax.swing.JTextArea();
+        jButton11 = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        containerPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,7 +177,7 @@ public class Client extends javax.swing.JFrame {
 
         SeverIPPanel.setBackground(new java.awt.Color(254, 200, 0));
 
-        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 36)); // NOI18N
         jLabel2.setText("BOOKTUBE");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -179,27 +211,28 @@ public class Client extends javax.swing.JFrame {
         SeverIPPanelLayout.setHorizontalGroup(
             SeverIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SeverIPPanelLayout.createSequentialGroup()
-                .addContainerGap(163, Short.MAX_VALUE)
+                .addContainerGap(298, Short.MAX_VALUE)
+                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
+            .addGroup(SeverIPPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(SeverIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SeverIPPanelLayout.createSequentialGroup()
-                        .addGroup(SeverIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(SeverIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtServerIP, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)
-                                .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4)))
-                        .addGap(69, 69, 69))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SeverIPPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(137, 137, 137))))
+                    .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(txtServerIP, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SeverIPPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(142, 142, 142))
         );
         SeverIPPanelLayout.setVerticalGroup(
             SeverIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SeverIPPanelLayout.createSequentialGroup()
-                .addGap(142, 142, 142)
+                .addGap(121, 121, 121)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtServerIP, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,7 +242,7 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         Parent.add(SeverIPPanel, "card2");
@@ -262,7 +295,7 @@ public class Client extends javax.swing.JFrame {
         LoginPanelLayout.setHorizontalGroup(
             LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginPanelLayout.createSequentialGroup()
-                .addGap(0, 200, Short.MAX_VALUE)
+                .addGap(0, 254, Short.MAX_VALUE)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(113, 113, 113))
             .addGroup(LoginPanelLayout.createSequentialGroup()
@@ -282,14 +315,14 @@ public class Client extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7))
-                    .addContainerGap(156, Short.MAX_VALUE)))
+                    .addContainerGap(210, Short.MAX_VALUE)))
         );
         LoginPanelLayout.setVerticalGroup(
             LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginPanelLayout.createSequentialGroup()
                 .addGap(144, 144, 144)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                 .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(btnndRegister))
@@ -306,7 +339,7 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(208, Short.MAX_VALUE)))
+                    .addContainerGap(211, Short.MAX_VALUE)))
         );
 
         Parent.add(LoginPanel, "card3");
@@ -441,7 +474,7 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(btnndLogin))
                 .addGap(18, 18, 18)
                 .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         Parent.add(RegisterPannel, "card4");
@@ -462,6 +495,8 @@ public class Client extends javax.swing.JFrame {
         );
 
         contentPanel.add(jPanel2, "card2");
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 0));
 
         jPanel3.setBackground(new java.awt.Color(255, 204, 0));
 
@@ -505,7 +540,12 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Sách Kỹ năng sống");
+        jButton5.setText("Blog");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Sách văn học");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -613,7 +653,7 @@ public class Client extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -680,6 +720,7 @@ public class Client extends javax.swing.JFrame {
         lblLprice.setText("price");
 
         jButton2.setText("Quay lại");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -688,6 +729,7 @@ public class Client extends javax.swing.JFrame {
 
         jButton9.setBackground(new java.awt.Color(255, 204, 0));
         jButton9.setText("Mua ngay");
+        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
@@ -697,20 +739,18 @@ public class Client extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel20.setText("Có thể bạn cũng thích");
 
-        lblBook3.setBackground(new java.awt.Color(255, 204, 0));
-        lblBook3.setOpaque(true);
+        bookBoxPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblBook1.setBackground(new java.awt.Color(255, 204, 0));
-        lblBook1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblBook1.setOpaque(true);
-        lblBook1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblBook1MouseClicked(evt);
-            }
-        });
-
-        lblBook2.setBackground(new java.awt.Color(255, 204, 0));
-        lblBook2.setOpaque(true);
+        javax.swing.GroupLayout bookBoxPanelLayout = new javax.swing.GroupLayout(bookBoxPanel);
+        bookBoxPanel.setLayout(bookBoxPanelLayout);
+        bookBoxPanelLayout.setHorizontalGroup(
+            bookBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 612, Short.MAX_VALUE)
+        );
+        bookBoxPanelLayout.setVerticalGroup(
+            bookBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 199, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -719,9 +759,6 @@ public class Client extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(322, 322, 322)
-                        .addComponent(lblBookName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -751,21 +788,17 @@ public class Client extends javax.swing.JFrame {
                                     .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblLprice, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 57, Short.MAX_VALUE))
+                                .addComponent(lblLprice, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblBookName, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblBook1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(31, 31, 31)
-                        .addComponent(lblBook2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblBook3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addContainerGap())
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(bookBoxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -798,21 +831,163 @@ public class Client extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 189, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel20)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblBook2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblBook3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblBook1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bookBoxPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(34, 34, 34))
         );
 
         ParentO.add(jPanel5, "card3");
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel10.setBackground(new java.awt.Color(255, 204, 0));
+
+        jTextPane1.setEditable(false);
+        jTextPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setViewportView(jTextPane1);
+
+        jButton10.setText("Send");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        currentText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                currentTextActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(currentText, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(currentText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel27.setText("Share your reading experience with BookTube");
+
+        jPanel9.setBackground(new java.awt.Color(255, 204, 0));
+
+        contentPost.setColumns(20);
+        contentPost.setRows(5);
+        jScrollPane3.setViewportView(contentPost);
+
+        jButton11.setText("Post");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton11)))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton11)
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/man.png"))); // NOI18N
+
+        jLabel28.setText("username");
+
+        containerPanel.setLayout(new javax.swing.BoxLayout(containerPanel, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane4.setViewportView(containerPanel);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel27))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel27)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel28))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4)))
+                .addContainerGap())
+        );
+
+        jScrollPane4.getAccessibleContext().setAccessibleName("");
+
+        ParentO.add(jPanel8, "card4");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -945,7 +1120,9 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        ParentO.removeAll();
+        ParentO.add(jPanel6);
+        ParentO.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -958,13 +1135,37 @@ public class Client extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-
+        try {
+            URI uri = new URI("https://www.fahasa.com/");
+            Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void lblBook1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBook1MouseClicked
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        ParentO.removeAll();
+        ParentO.add(jPanel8);
+        ParentO.repaint();
+        ParentO.revalidate();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
-    }//GEN-LAST:event_lblBook1MouseClicked
+    private void currentTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_currentTextActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        postArticle();
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        sendMess();
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     private void setUpSocket() {
         thread = new Thread() {
@@ -995,7 +1196,7 @@ public class Client extends javax.swing.JFrame {
                                 contentPanel.repaint();
                                 contentPanel.revalidate();
                                 jLabel17.setText(messageSplit[2]);
-
+                                jLabel28.setText(jLabel17.getText());
                             } else {
                                 JOptionPane.showMessageDialog(null, "Đăng nhập không thành công do sai mật khẩu hoặc tài khoản không tồn tại", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
@@ -1050,12 +1251,16 @@ public class Client extends javax.swing.JFrame {
                         }
 
                         if (messageSplit[0].equals("recommentBooks")) {
-                            lblBook1.setIcon(new ImageIcon(ImageIO.read(new URL(messageSplit[1])).getScaledInstance(lblBook1.getWidth(), lblBook1.getHeight(), java.awt.Image.SCALE_SMOOTH)));
-                            lblBook2.setIcon(new ImageIcon(ImageIO.read(new URL(messageSplit[2])).getScaledInstance(lblBook2.getWidth(), lblBook2.getHeight(), java.awt.Image.SCALE_SMOOTH)));
-                            lblBook3.setIcon(new ImageIcon(ImageIO.read(new URL(messageSplit[3])).getScaledInstance(lblBook3.getWidth(), lblBook3.getHeight(), java.awt.Image.SCALE_SMOOTH)));
-                            
+//                            lblBook1.setIcon(new ImageIcon(ImageIO.read(new URL(messageSplit[1])).getScaledInstance(lblBook1.getWidth(), lblBook1.getHeight(), java.awt.Image.SCALE_SMOOTH)));
+//                            lblBook2.setIcon(new ImageIcon(ImageIO.read(new URL(messageSplit[2])).getScaledInstance(lblBook2.getWidth(), lblBook2.getHeight(), java.awt.Image.SCALE_SMOOTH)));
+//                            lblBook3.setIcon(new ImageIcon(ImageIO.read(new URL(messageSplit[3])).getScaledInstance(lblBook3.getWidth(), lblBook3.getHeight(), java.awt.Image.SCALE_SMOOTH)));
+                            generateRecommentBooks(messageSplit[1], messageSplit[2], messageSplit[3]);
                             ParentO.repaint();
                             ParentO.revalidate();
+                        }
+                        
+                        if (messageSplit[0].equals("postPublic")) {
+                            createPostPanel(containerPanel, messageSplit[1], messageSplit[3], messageSplit[2], "djsfkd", 123);
                         }
 
                     }
@@ -1074,7 +1279,6 @@ public class Client extends javax.swing.JFrame {
     }
 
     private void generateBooks(String urls) throws IOException {
-
         String[] url = urls.split(",");
         for (String url1 : url) { // Ví dụ: Hiển thị 20 cuốn sách
             JLabel label = new JLabel(new ImageIcon(ImageIO.read(new URL(url1)).getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH)));
@@ -1089,8 +1293,12 @@ public class Client extends javax.swing.JFrame {
                 public void mouseClicked(MouseEvent e) {
                     try {
                         // Xử lý sự kiện khi nhấp chuột vào JLabel
-                        write("showDetail," + url1);
 
+                        bookBoxPanel.removeAll();
+                        write("showDetail," + url1);
+                        
+                        jPanel5.repaint();
+                        jPanel5.revalidate();
                     } catch (IOException ex) {
                         Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1100,6 +1308,114 @@ public class Client extends javax.swing.JFrame {
         jScrollPane1.repaint();
         jScrollPane1.revalidate();
     }
+    
+    private void createPostPanel(JPanel containerPanel, String author, String date, String content, String imagePath, int likeCount) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        panel.setBackground(Color.WHITE);
+
+        // Header
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JLabel authorLabel = new JLabel(author);
+        JLabel dateLabel = new JLabel(date);
+        headerPanel.add(authorLabel);
+        headerPanel.add(dateLabel);
+
+        // Image
+        JLabel imageLabel = new JLabel();
+        ImageIcon imageIcon = new ImageIcon(imagePath);
+        imageLabel.setIcon(imageIcon);
+
+        // Content
+        JTextPane contentTextPane = new JTextPane();
+        contentTextPane.setEditable(false);
+        contentTextPane.setText(content);
+        StyledDocument doc = contentTextPane.getStyledDocument();
+        SimpleAttributeSet centerStyle = new SimpleAttributeSet();
+        StyleConstants.setAlignment(centerStyle, StyleConstants.ALIGN_JUSTIFIED);
+        doc.setParagraphAttributes(0, doc.getLength(), centerStyle, false);
+
+        JScrollPane scrollPane = new JScrollPane(contentTextPane);
+        scrollPane.setPreferredSize(new Dimension(500, 150));
+
+        // Footer
+        JPanel footerPanel = new JPanel();
+        footerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        JButton likeButton = new JButton("Like (" + likeCount + ")");
+        JButton commentButton = new JButton("Comment");
+        JButton shareButton = new JButton("Share");
+
+        // ActionListener for Like button
+        likeButton.addActionListener(new ActionListener() {
+            private int count = likeCount;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                count++;
+                likeButton.setText("Like (" + count + ")");
+            }
+        });
+
+        footerPanel.add(likeButton);
+        footerPanel.add(commentButton);
+        footerPanel.add(shareButton);
+
+        // Add components to the main panel
+        panel.add(headerPanel, BorderLayout.NORTH);
+        panel.add(imageLabel, BorderLayout.WEST);
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(footerPanel, BorderLayout.SOUTH);
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        // Add panel to the container panel
+        containerPanel.add(panel);
+        containerPanel.repaint();
+        containerPanel.revalidate();
+    }
+
+    private void generateRecommentBooks(String url1, String url2, String url3) throws IOException {
+        String[] urls = {url1, url2, url3};
+        bookBoxPanel.setLayout(new GridLayout(1, urls.length, 10, 10)); // Sử dụng GridLayout để chia các JLabel trong bookBoxPanel
+
+        for (String url : urls) {
+            ImageIcon imageIcon = new ImageIcon(new URL(url));
+            Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+            JLabel label = new JLabel(scaledIcon);
+            label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            bookBoxPanel.add(label);
+
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    try {
+                        // Xử lý sự kiện khi nhấp chuột vào JLabel
+                        bookBoxPanel.removeAll();
+                        write("showDetail," + url);
+                        bookBoxPanel.repaint();
+                        bookBoxPanel.revalidate();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+        }
+    }
+    
+    public void sendMess(){
+        String content = currentText.getText();
+        String username = jLabel17.getText();
+        try {
+            write("sendtoGlobal,"+content+","+username);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
     public static String hashWithMD5(String data) {
         try {
@@ -1130,6 +1446,17 @@ public class Client extends javax.swing.JFrame {
 
         return null;
     }
+    
+    private void postArticle(){
+        String username = jLabel17.getText();
+        String content = contentPost.getText();
+        try {
+            write("postRequest,"+username+","+content);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     /**
      * @param args the command line arguments
@@ -1168,14 +1495,20 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel ParentO;
     private javax.swing.JPanel RegisterPannel;
     private javax.swing.JPanel SeverIPPanel;
+    private javax.swing.JPanel bookBoxPanel;
     private javax.swing.JPanel bookPanel;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnndLogin;
     private javax.swing.JButton btnndRegister;
+    private javax.swing.JPanel containerPanel;
     private javax.swing.JPanel contentPanel;
+    private javax.swing.JTextArea contentPost;
+    private javax.swing.JTextField currentText;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1198,10 +1531,13 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1210,17 +1546,21 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lblBook1;
-    private javax.swing.JLabel lblBook2;
-    private javax.swing.JLabel lblBook3;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblBookImg;
     private javax.swing.JLabel lblBookName;
     private javax.swing.JLabel lblLprice;

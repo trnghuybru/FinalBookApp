@@ -48,6 +48,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -654,6 +655,11 @@ public class Client extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(255, 204, 0));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton4.setText("Search");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 13)); // NOI18N
         jLabel18.setText("Kho sách hay");
@@ -946,7 +952,7 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        nameFile.setText("path");
+        nameFile.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         pathAbsolute.setEditable(false);
         pathAbsolute.setText("path1");
@@ -1329,6 +1335,16 @@ public class Client extends javax.swing.JFrame {
         pathAbsolute.setText(detail[1]);
     }//GEN-LAST:event_chooseImgActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String name = jTextField1.getText();
+        try {
+            write("searchName," + name);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void setUpSocket() {
         thread = new Thread() {
             @Override
@@ -1423,11 +1439,24 @@ public class Client extends javax.swing.JFrame {
 
                         if (messageSplit[0].equals("postPublic")) {
                             createPostPanel(containerPanel, messageSplit[1], messageSplit[3], messageSplit[2], messageSplit[4], 123);
+                            contentPost.setText("");
+                            nameFile.setText("");
+                            pathAbsolute.setText("");
                         }
 
                         if (messageSplit[0].equals("sentoGlobal")) {
                             jTextPane1.setText(jTextPane1.getText() + messageSplit[1] + "\n");
                             jTextPane1.setCaretPosition(jTextPane1.getDocument().getLength());
+                        }
+                        
+                        if (messageSplit[0].equals("searchName")) {
+                            StringBuilder urlBuilder = new StringBuilder();
+                            for (int i = 1; i < messageSplit.length - 1; i++) {
+                                urlBuilder.append(messageSplit[i]).append(",");
+                            }
+                            urlBuilder.append(messageSplit[messageSplit.length - 1]);
+                            String url = urlBuilder.toString();
+                            generateBooks(url);
                         }
 
                     }
@@ -1446,6 +1475,7 @@ public class Client extends javax.swing.JFrame {
     }
 
     private void generateBooks(String urls) throws IOException {
+        bookPanel.removeAll();
         String[] url = urls.split(",");
         for (String url1 : url) { // Ví dụ: Hiển thị 20 cuốn sách
             JLabel label = new JLabel(new ImageIcon(ImageIO.read(new URL(url1)).getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH)));
@@ -1501,7 +1531,7 @@ public class Client extends javax.swing.JFrame {
 
         JScrollPane scrollPane = new JScrollPane(contentTextPane);
         // Image
-            JLabel imageLabel = new JLabel();
+        JLabel imageLabel = new JLabel();
         if (!imagePath.equals("")) {
             // Giải mã hình ảnh từ Base64
             byte[] imageByte1 = Base64.getDecoder().decode(imagePath);
@@ -1514,8 +1544,13 @@ public class Client extends javax.swing.JFrame {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
             Image originalImage = (Image) bufferedImage;
-            int newWidth = 566;
-            int newHeight = 390 - headerPanel.getPreferredSize().height - scrollPane.getPreferredSize().height; // Đảm bảo kích thước ảnh phù hợp với chiều cao còn lại của frame
+            int maxWidth = 300;
+            int maxHeight = 300;
+            double widthRatio = (double) originalImage.getWidth(null) / maxWidth;
+            double heightRatio = (double) originalImage.getHeight(null) / maxHeight;
+            double ratio = Math.max(widthRatio, heightRatio);
+            int newWidth = (int) Math.round(originalImage.getWidth(null) / ratio);
+            int newHeight = (int) Math.round(originalImage.getHeight(null) / ratio);
             Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(scaledImage);
             imageLabel.setIcon(imageIcon);
@@ -1656,6 +1691,7 @@ public class Client extends javax.swing.JFrame {
 
     public String[] chooseFile() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "gif"));
         int result = fileChooser.showOpenDialog(null);
         String name = "";
         String path = "";

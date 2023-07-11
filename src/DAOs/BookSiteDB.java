@@ -83,6 +83,33 @@ public class BookSiteDB implements DAOinterface<BookSite> {
         }
         return ketQua; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    public ArrayList<BookSite> selectSearchBook(String name) {
+        ArrayList<BookSite> ketQua = new ArrayList<BookSite>();
+        try {
+            Connection c = new Condb().getConnection();
+
+            Statement st = c.createStatement();
+
+            String sql = "SELECT book.name, book.bookid, booksite.url, booksite.siteid, booksite.price FROM book INNER JOIN booksite ON book.bookid = booksite.bookid WHERE book.name LIKE '%"+name+"%' ORDER BY RAND() LIMIT 25";
+
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                int bookid = rs.getInt("bookid");
+                int siteid = rs.getInt("siteid");
+                double price = rs.getDouble("price");
+                String url = rs.getString("url");
+
+                BookSite ebook = new BookSite(siteid, bookid, price, url);
+                ketQua.add(ebook);
+            }
+            Condb.closeDBConnect(c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ketQua; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
 
     @Override
     public BookSite selectById(String st) {

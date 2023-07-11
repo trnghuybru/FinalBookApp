@@ -65,7 +65,8 @@ class ServerThread implements Runnable {
                         System.out.println("Khời động luông mới thành công, ID là: " + clientNumber);
                         write("get-id" + "," + this.clientNumber);
                         write("login,success," + getUsername(message));
-                        write("showBooks," + getUrl());
+                        ArrayList<BookSite> ecobooks = BookSiteDB.getInstance().selectAll();
+                        write("showBooks," + getUrl(ecobooks));
                         isLogin = true;
                     } else {
                         write("login,fail");
@@ -95,6 +96,11 @@ class ServerThread implements Runnable {
                 
                 if (messageSplit[0].equals("sendtoGlobal")){
                     Server.serverThreadBus.boardCast("sentoGlobal,"+messageSplit[1]+": "+messageSplit[2]);
+                }
+                
+                if (messageSplit[0].equals("searchName")){
+                    ArrayList<BookSite> book = BookSiteDB.getInstance().selectSearchBook(messageSplit[1]);
+                    write("searchName,"+getUrl(book));
                 }
 
 //                if (isLogin == true) {
@@ -153,8 +159,7 @@ class ServerThread implements Runnable {
         AccountDB.getInstance().insert(account);
     }
 
-    private String getUrl() {
-        ArrayList<BookSite> ecobooks = BookSiteDB.getInstance().selectAll();
+    private String getUrl(ArrayList<BookSite> ecobooks) {
         String[] urls = new String[ecobooks.size()];
         for (int i = 0; i < ecobooks.size(); i++) {
             urls[i] = ecobooks.get(i).getUrl();

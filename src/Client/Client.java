@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -33,10 +34,12 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
@@ -150,6 +153,8 @@ public class Client extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         bookBoxPanel = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -161,10 +166,16 @@ public class Client extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         contentPost = new javax.swing.JTextArea();
         jButton11 = new javax.swing.JButton();
+        chooseImg = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         containerPanel = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton12 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BookTube");
@@ -183,7 +194,7 @@ public class Client extends javax.swing.JFrame {
         jLabel2.setText("BOOKTUBE");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("ServeIP");
+        jLabel3.setText("ServerIP");
 
         txtServerIP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,7 +256,7 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         Parent.add(SeverIPPanel, "card2");
@@ -319,7 +330,7 @@ public class Client extends javax.swing.JFrame {
             .addGroup(LoginPanelLayout.createSequentialGroup()
                 .addGap(144, 144, 144)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -478,7 +489,7 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(btnndLogin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         Parent.add(RegisterPannel, "card4");
@@ -753,8 +764,12 @@ public class Client extends javax.swing.JFrame {
         );
         bookBoxPanelLayout.setVerticalGroup(
             bookBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 199, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
+
+        jLabel29.setText("Giá bán:");
+
+        jLabel30.setText("Giá bìa:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -788,10 +803,15 @@ public class Client extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtDetaiEcoBook, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel29)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(49, 49, 49)
                                 .addComponent(lblLprice, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblBookName, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -827,15 +847,17 @@ public class Client extends javax.swing.JFrame {
                             .addComponent(jLabel26)
                             .addComponent(txtDetaiEcoBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblLprice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblLprice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 189, Short.MAX_VALUE)
+                        .addGap(0, 198, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel20)
@@ -890,7 +912,7 @@ public class Client extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(currentText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -909,6 +931,13 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        chooseImg.setText("Chọn ảnh");
+        chooseImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseImgActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -918,7 +947,8 @@ public class Client extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(chooseImg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton11)))
                 .addContainerGap())
         );
@@ -928,7 +958,9 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton11)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton11)
+                    .addComponent(chooseImg))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
@@ -992,6 +1024,65 @@ public class Client extends javax.swing.JFrame {
         jScrollPane4.getAccessibleContext().setAccessibleName("");
 
         ParentO.add(jPanel8, "card4");
+
+        jPanel12.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 197, Short.MAX_VALUE)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel13.setBackground(new java.awt.Color(255, 204, 0));
+
+        jTextField2.setText("jTextField2");
+
+        jButton12.setText("jButton12");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jTextField2))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGap(0, 508, Short.MAX_VALUE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        ParentO.add(jPanel11, "card5");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1082,7 +1173,7 @@ public class Client extends javax.swing.JFrame {
             return;
         }
 
-        String pw = new String (txtPassRegis.getPassword());
+        String pw = new String(txtPassRegis.getPassword());
 
         // Kiểm tra số điện thoại có đúng định dạng hay không (8 chữ số trở lên)
         if (pw.length() < 8) {
@@ -1209,6 +1300,11 @@ public class Client extends javax.swing.JFrame {
         sendMess();
         currentText.setText("");
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void chooseImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseImgActionPerformed
+        // TODO add your handling code here:
+        chooseFile();
+    }//GEN-LAST:event_chooseImgActionPerformed
 
     private void setUpSocket() {
         thread = new Thread() {
@@ -1371,19 +1467,30 @@ public class Client extends javax.swing.JFrame {
         headerPanel.add(authorLabel);
         headerPanel.add(dateLabel);
 
+        // Content
+        JTextPane contentTextPane = new JTextPane();
+        contentTextPane.setEditable(false);
+        contentTextPane.setText(content);
+        StyledDocument doc = contentTextPane.getStyledDocument();
+        SimpleAttributeSet centerStyle = new SimpleAttributeSet();
+        StyleConstants.setAlignment(centerStyle, StyleConstants.ALIGN_JUSTIFIED);
+        doc.setParagraphAttributes(0, doc.getLength(), centerStyle, false);
+
+        JScrollPane scrollPane = new JScrollPane(contentTextPane);
+
         // Image
         JLabel imageLabel = new JLabel();
-        ImageIcon imageIcon = new ImageIcon(imagePath);
-        imageLabel.setIcon(imageIcon);
-
-        // Content
-        JTextArea contentTextArea = new JTextArea(content);
-        contentTextArea.setEditable(false);
-        contentTextArea.setLineWrap(true);
-        contentTextArea.setWrapStyleWord(true);
-
-        JScrollPane scrollPane = new JScrollPane(contentTextArea);
-        scrollPane.setPreferredSize(new Dimension(300, 150));
+        try {
+            URL imageURL = new URL("https://cdn0.fahasa.com/media/catalog/product/i/m/image_180456.jpg");
+            Image originalImage = ImageIO.read(imageURL);
+            int newWidth = 566;
+            int newHeight = 390 - headerPanel.getPreferredSize().height - scrollPane.getPreferredSize().height; // Đảm bảo kích thước ảnh phù hợp với chiều cao còn lại của frame
+            Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(scaledImage);
+            imageLabel.setIcon(imageIcon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Footer
         JPanel footerPanel = new JPanel();
@@ -1407,10 +1514,16 @@ public class Client extends javax.swing.JFrame {
         footerPanel.add(commentButton);
         footerPanel.add(shareButton);
 
+        // SplitPane
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPane.setDividerLocation(350);
+        splitPane.setResizeWeight(1.0); // Đảm bảo nội dung không bị co lại khi thay đổi kích thước frame
+        splitPane.setTopComponent(scrollPane);
+        splitPane.setBottomComponent(imageLabel);
+
         // Add components to the main panel
         panel.add(headerPanel, BorderLayout.NORTH);
-        panel.add(imageLabel, BorderLayout.WEST);
-        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(splitPane, BorderLayout.CENTER);
         panel.add(footerPanel, BorderLayout.SOUTH);
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -1420,6 +1533,68 @@ public class Client extends javax.swing.JFrame {
         containerPanel.revalidate();
     }
 
+//    private void createPostPanel(JPanel containerPanel, String author, String date, String content, String imagePath, int likeCount) {
+//        JPanel panel = new JPanel();
+//        panel.setLayout(new BorderLayout());
+//        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+//        panel.setBackground(Color.WHITE);
+//
+//        // Header
+//        JPanel headerPanel = new JPanel();
+//        headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//        JLabel authorLabel = new JLabel(author);
+//        JLabel dateLabel = new JLabel(date);
+//        headerPanel.add(authorLabel);
+//        headerPanel.add(dateLabel);
+//
+//        // Image
+//        JLabel imageLabel = new JLabel();
+//        ImageIcon imageIcon = new ImageIcon(imagePath);
+//        imageLabel.setIcon(imageIcon);
+//
+//        // Content
+//        JTextArea contentTextArea = new JTextArea(content);
+//        contentTextArea.setEditable(false);
+//        contentTextArea.setLineWrap(true);
+//        contentTextArea.setWrapStyleWord(true);
+//
+//        JScrollPane scrollPane = new JScrollPane(contentTextArea);
+//        scrollPane.setPreferredSize(new Dimension(300, 150));
+//
+//        // Footer
+//        JPanel footerPanel = new JPanel();
+//        footerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+//        JButton likeButton = new JButton("Like (" + likeCount + ")");
+//        JButton commentButton = new JButton("Comment");
+//        JButton shareButton = new JButton("Share");
+//
+//        // ActionListener for Like button
+//        likeButton.addActionListener(new ActionListener() {
+//            private int count = likeCount;
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                count++;
+//                likeButton.setText("Like (" + count + ")");
+//            }
+//        });
+//
+//        footerPanel.add(likeButton);
+//        footerPanel.add(commentButton);
+//        footerPanel.add(shareButton);
+//
+//        // Add components to the main panel
+//        panel.add(headerPanel, BorderLayout.NORTH);
+//        panel.add(imageLabel, BorderLayout.WEST);
+//        panel.add(scrollPane, BorderLayout.CENTER);
+//        panel.add(footerPanel, BorderLayout.SOUTH);
+//        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+//
+//        // Add panel to the container panel
+//        containerPanel.add(panel);
+//        containerPanel.repaint();
+//        containerPanel.revalidate();
+//    }
     private void generateRecommentBooks(String url1, String url2, String url3) throws IOException {
         String[] urls = {url1, url2, url3};
         bookBoxPanel.setLayout(new GridLayout(1, urls.length, 10, 10)); // Sử dụng GridLayout để chia các JLabel trong bookBoxPanel
@@ -1448,6 +1623,15 @@ public class Client extends javax.swing.JFrame {
                 }
             });
         }
+    }
+    
+    public void chooseFile(){
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+        }
+        
     }
 
     public void sendMess() {
@@ -1544,6 +1728,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnndLogin;
     private javax.swing.JButton btnndRegister;
+    private javax.swing.JButton chooseImg;
     private javax.swing.JPanel containerPanel;
     private javax.swing.JPanel contentPanel;
     private javax.swing.JTextArea contentPost;
@@ -1551,6 +1736,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1580,7 +1766,9 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1589,6 +1777,9 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1602,6 +1793,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblBookImg;
     private javax.swing.JLabel lblBookName;

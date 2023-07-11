@@ -981,11 +981,13 @@
                                           <Component id="txtDetaiEcoBook" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblLprice" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel29" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
-                                          <Component id="lblPrice" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                          <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="lblLprice" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                              <Component id="lblPrice" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                              <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jButton9" min="-2" pref="33" max="-2" attributes="0"/>
@@ -1348,6 +1350,10 @@
                                       <Component id="jScrollPane3" alignment="0" pref="484" max="32767" attributes="0"/>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="chooseImg" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="nameFile" min="-2" pref="94" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                                          <Component id="pathAbsolute" min="-2" pref="71" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="jButton11" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -1365,6 +1371,8 @@
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jButton11" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="chooseImg" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="nameFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="pathAbsolute" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace pref="11" max="32767" attributes="0"/>
                               </Group>
@@ -1402,6 +1410,21 @@
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chooseImgActionPerformed"/>
                           </Events>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="nameFile">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="path"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="pathAbsolute">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="text" type="java.lang.String" value="path1"/>
+                            <Property name="enabled" type="boolean" value="false"/>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="pathAbsolute.setVisible(false);"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>

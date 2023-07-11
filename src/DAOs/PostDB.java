@@ -32,7 +32,7 @@ public class PostDB implements DAOinterface<Post> {
             Connection c = Condb.getConnection();
 
             // Tạo đối tượng PreparedStatement để sử dụng câu lệnh SQL có tham số
-            String sql = "INSERT INTO `post`(`IDPost`, `username`, `date`, `content`) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO `post`(`IDPost`, `username`, `date`, `content`,`img`) VALUES (?, ?, ?, ?,?)";
             PreparedStatement pstmt = c.prepareStatement(sql);
 
             // Thiết lập giá trị tham số
@@ -49,7 +49,7 @@ public class PostDB implements DAOinterface<Post> {
             pstmt.setTimestamp(3, new Timestamp(convertedDate.getTime()));
 
             pstmt.setString(4, t.getContent());
-
+            pstmt.setString(5, t.getImg());
             // Thực thi câu lệnh SQL
             ketQua = pstmt.executeUpdate();
 

@@ -16,8 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,11 +28,14 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -167,6 +172,8 @@ public class Client extends javax.swing.JFrame {
         contentPost = new javax.swing.JTextArea();
         jButton11 = new javax.swing.JButton();
         chooseImg = new javax.swing.JButton();
+        nameFile = new javax.swing.JLabel();
+        pathAbsolute = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -847,11 +854,12 @@ public class Client extends javax.swing.JFrame {
                             .addComponent(jLabel26)
                             .addComponent(txtDetaiEcoBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblLprice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel30))
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblLprice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel30)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -938,6 +946,13 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        nameFile.setText("path");
+
+        pathAbsolute.setEditable(false);
+        pathAbsolute.setText("path1");
+        pathAbsolute.setEnabled(false);
+        pathAbsolute.setVisible(false);
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -948,6 +963,10 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addComponent(chooseImg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(pathAbsolute, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton11)))
                 .addContainerGap())
@@ -960,7 +979,9 @@ public class Client extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton11)
-                    .addComponent(chooseImg))
+                    .addComponent(chooseImg)
+                    .addComponent(nameFile)
+                    .addComponent(pathAbsolute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
@@ -1303,7 +1324,9 @@ public class Client extends javax.swing.JFrame {
 
     private void chooseImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseImgActionPerformed
         // TODO add your handling code here:
-        chooseFile();
+        String[] detail = chooseFile();
+        nameFile.setText(detail[0]);
+        pathAbsolute.setText(detail[1]);
     }//GEN-LAST:event_chooseImgActionPerformed
 
     private void setUpSocket() {
@@ -1399,7 +1422,7 @@ public class Client extends javax.swing.JFrame {
                         }
 
                         if (messageSplit[0].equals("postPublic")) {
-                            createPostPanel(containerPanel, messageSplit[1], messageSplit[3], messageSplit[2], "djsfkd", 123);
+                            createPostPanel(containerPanel, messageSplit[1], messageSplit[3], messageSplit[2], messageSplit[4], 123);
                         }
 
                         if (messageSplit[0].equals("sentoGlobal")) {
@@ -1477,19 +1500,25 @@ public class Client extends javax.swing.JFrame {
         doc.setParagraphAttributes(0, doc.getLength(), centerStyle, false);
 
         JScrollPane scrollPane = new JScrollPane(contentTextPane);
-
         // Image
-        JLabel imageLabel = new JLabel();
-        try {
-            URL imageURL = new URL("https://cdn0.fahasa.com/media/catalog/product/i/m/image_180456.jpg");
-            Image originalImage = ImageIO.read(imageURL);
+            JLabel imageLabel = new JLabel();
+        if (!imagePath.equals("")) {
+            // Giải mã hình ảnh từ Base64
+            byte[] imageByte1 = Base64.getDecoder().decode(imagePath);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte1);
+            // Sử dụng ImageIO để đọc chuỗi byte và tạo đối tượng BufferedImage
+            BufferedImage bufferedImage = null;
+            try {
+                bufferedImage = ImageIO.read(bis);
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Image originalImage = (Image) bufferedImage;
             int newWidth = 566;
             int newHeight = 390 - headerPanel.getPreferredSize().height - scrollPane.getPreferredSize().height; // Đảm bảo kích thước ảnh phù hợp với chiều cao còn lại của frame
             Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(scaledImage);
             imageLabel.setIcon(imageIcon);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         // Footer
@@ -1624,14 +1653,20 @@ public class Client extends javax.swing.JFrame {
             });
         }
     }
-    
-    public void chooseFile(){
+
+    public String[] chooseFile() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(null);
+        String name = "";
+        String path = "";
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
+            name = selectedFile.getName();
+            path = selectedFile.getAbsolutePath();
+
         }
-        
+        String[] string = {name, path};
+        return string;
     }
 
     public void sendMess() {
@@ -1677,8 +1712,19 @@ public class Client extends javax.swing.JFrame {
     private void postArticle() {
         String username = jLabel17.getText();
         String content = contentPost.getText();
+        String base64Image = "";
+        if (!pathAbsolute.getText().equals("")) {
+            try {
+                File img = new File(pathAbsolute.getText());
+                byte[] imageBytes = Files.readAllBytes(img.toPath());
+                base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         try {
-            write("postRequest," + username + "," + content);
+            write("postRequest," + username + "," + content + "," + base64Image);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1799,6 +1845,8 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel lblBookName;
     private javax.swing.JLabel lblLprice;
     private javax.swing.JLabel lblPrice;
+    private javax.swing.JLabel nameFile;
+    private javax.swing.JTextField pathAbsolute;
     private javax.swing.JPasswordField txtConfirmPass;
     private javax.swing.JTextField txtDetaiEcoBook;
     private javax.swing.JTextField txtDetailAuthor;

@@ -16,11 +16,21 @@ public class Post {
     private Date date;
     private String content;
     private int liked;
+    private String img;
 
-    public Post(String username, String content, Date date) {
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Post(String username, String content, Date date, String img) {
         this.username = username;
         this.content = content;
         this.date = date;
+        this.img = img;
     }
     
     

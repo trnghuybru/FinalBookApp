@@ -88,9 +88,9 @@ class ServerThread implements Runnable {
                     Date dateTime = new Date(); 
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String mysqlDateTime = sdf.format(dateTime);
-                    Post post = new Post(messageSplit[1], messageSplit[2], dateTime);
+                    Post post = new Post(messageSplit[1], messageSplit[2], dateTime,messageSplit[3]);
                     PostDB.getInstance().insert(post);
-                    Server.serverThreadBus.boardCast("postPublic," + messageSplit[1] + "," + messageSplit[2]+","+mysqlDateTime);
+                    Server.serverThreadBus.boardCast("postPublic," + messageSplit[1] + "," + messageSplit[2]+","+mysqlDateTime+","+messageSplit[3]);
                 }
                 
                 if (messageSplit[0].equals("sendtoGlobal")){
